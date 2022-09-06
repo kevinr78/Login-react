@@ -54,11 +54,17 @@ const Login = (props) => {
     isValid: null,
   });
 
-  /*  useEffect(() => {
-    setFormIsValid(
-      enteredEmail.includes("@") && enteredPassword.trim().length > 6
-    );
-  }, [enteredEmail, enteredPassword]); */
+  useEffect(() => {
+    const identifier = setTimeout(() => {
+      console.log("form valid");
+      setFormIsValid(emailState.isValid && password.isValid);
+    }, 800);
+
+    return () => {
+      console.log("cleanup");
+      clearTimeout(identifier);
+    };
+  }, [emailState.isValid, password.isValid]);
 
   const emailChangeHandler = (event) => {
     dispatchEmail({ type: "USER_INPUT", value: event.target.value });
